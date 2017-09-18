@@ -1,2 +1,3 @@
 # zhiyuan_dxyy
-a competition site for SJTU Zhiyuan College's Orienteering
+a competition website for SJTU Zhiyuan College's Orienteering
+Written by **Xuehui Sun** & **Xiaoyuan Liu**
