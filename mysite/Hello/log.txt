@@ -1,0 +1,20 @@
+2017-09-01 17:01:31
+  Server open: "data.bin" not found.
+2017-09-01 17:01:46
+  Server open: "data.bin" not found.
+  Server close: without saving.
+2017-09-01 17:01:50
+  Server close: without saving.
+2017-09-01 17:02:48
+  Server open: "data.bin" not found.
+2017-09-01 17:03:11
+  Server close: without saving.
+2017-09-01 17:07:53
+  Server open: "data.bin" not found.
+  Server close: without saving.
+2017-09-01 17:44:19
+  Server open: "data.bin" not found.
+2017-09-01 17:44:34
+  Server started.
+  Server stopped.
+  Server close: without saving.

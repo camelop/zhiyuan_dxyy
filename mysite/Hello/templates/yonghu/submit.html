@@ -1,0 +1,97 @@
+{% load at %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>“凤凰杯”致远趣味定向越野</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  </head>
+  <body>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <p class="navbar-text">“凤凰杯”致远趣味定向越野·管理界面</p>
+            </div>
+        </nav>
+    <div class="row">
+           <div class="center-block" style="width:1000px;">
+    <form action="{% url 'submit' %}" class="form-horizontal" method="post">{% csrf_token %}
+      <div class="form-group">
+        <label for="exampleInputEmail1">地点编号：</label>
+        <input type="number" name="site"  placeholder="如忘记可咨询网络组">
+      </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">小组编号：</label>
+          <input type="number" name="group" placeholder="输入小组编号">
+        </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">任务分数：</label>
+            <input type="number" name="score" placeholder="输入该项任务得分">
+          </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">备注说明：</label>
+        <textarea class="form-control" name="remark" rows="3"></textarea>
+      </div>
+      {{error_message}}
+      <button type="submit" class="btn btn-danger btn-block">提交</button>
+    </form>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>用户</th>
+          <th>点数</th>
+          <th>分数</th>
+      <th>unlock conditions</th>
+    </tr>
+      </thead>
+      <tbody>
+    
+    {% for user in user_list %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{user.username}}</td>
+          <td>{{user.point}}</td>
+          <td>{{user.mark}}</td>
+      <td>
+      <div id="js_need_{{user.username}}">
+        {{user.open}}
+      </div>
+      </td>
+        </tr>
+    
+      <script>
+      var nw;
+      nw = document.getElementById("js_need_{{user.username}}").innerHTML;
+      var data;
+      data = JSON.parse(nw)
+      nw = "";
+      for (var i=0; i<10;i++){
+        if (parseInt(data[i]) > 0){
+          nw = nw + "■";
+        } else {
+          nw = nw + "□"
+        }
+      }
+      document.getElementById("js_need_{{user.username}}").innerHTML = nw;
+      </script>
+
+    {% endfor %}
+      </tbody>
+    </table>  
+
+
+    
+  </body>
+</html>

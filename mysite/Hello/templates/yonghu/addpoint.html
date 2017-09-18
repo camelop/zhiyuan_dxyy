@@ -1,0 +1,103 @@
+{% load at %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>“凤凰杯”致远趣味定向越野</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+	
+	    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <p class="navbar-text">“凤凰杯”致远趣味定向越野·管理界面</p>
+            </div>
+        </nav>
+    <div class="row">
+           <div class="center-block" style="width:1000px;">
+	  
+	  
+	  
+	<table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>用户</th>
+          <th>点数</th>
+          <th>分数</th>
+		  <th>完成情况</th>
+		</tr>
+      </thead>
+      <tbody>
+	  
+		{% for user in user_list %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{user.username}}</td>
+          <td>{{user.point}}</td>
+          <td>{{user.mark}}</td>
+		  <td>
+			<div id="js_need_{{user.username}}">
+				{{user.stat}}
+			</div>
+			</td>
+        </tr>
+		
+		  <script>
+			var nw;
+			nw = document.getElementById("js_need_{{user.username}}").innerHTML;
+			var data;
+			data = JSON.parse(nw)
+			nw = "";
+			for (var i=0; i<10;i++){
+				if (parseInt(data[i][0]) > 0){
+					nw = nw + "■";
+				} else {
+					if (parseInt(data[i][2]) > 0){
+						nw = nw + "□"
+					} else {
+						if (parseInt(data[i][1]) > 0){
+							nw = nw+ "□"
+						} else {
+							nw = nw + "□"
+						}
+					}
+				}
+			}
+			document.getElementById("js_need_{{user.username}}").innerHTML = nw;
+		  </script>
+		{% endfor %}
+      </tbody>
+    </table>  
+	  
+	  
+	  
+	  
+	  
+	  
+      <br>
+      {{error_message}}
+    <form action="{% url 'addpoint' %}?action=add" class="form-horizontal" method="post">{% csrf_token %}
+      <button type="submit" class="btn btn-success btn-block">增加点数</button>
+    </form>
+	<br>
+    <form action="{% url 'addpoint' %}?action=clear" class="form-horizontal" method="post">{% csrf_token %}
+      <button type="submit" class="btn btn-danger btn-block">一键解体</button>
+    </form>
+	<br>
+    <form action="{% url 'addpoint' %}?action=refresh" class="form-horizontal" method="post">{% csrf_token %}
+      <button type="submit" class="btn btn-info btn-block">刷新一下</button>
+    </form>
+        </div>
+    </div>
+  </body>
+</html>

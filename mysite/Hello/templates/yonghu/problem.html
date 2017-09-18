@@ -1,0 +1,123 @@
+{% load at %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>题目-{{problem.id}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+      <nav class="navbar navbar-inverse">
+          <div class="container">
+              <p class="navbar-text">欢迎参加比赛, <b>{{name}}</b>, 您的剩余点数为{{user.point}}</p>
+              <a href='/logout'><button type="button" class="btn btn-sm navbar-btn">登出</button></a>
+          </div>
+      </nav>
+
+    <a href='/problems'><button type="button" class="btn btn-success btn-block">返回</button></a>
+    <br>
+
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">题目描述：</h3>
+      </div>
+      <div class="panel-body">
+          <img src="http://littlecircle.top/dxyy/problemset/{{content}}.png" alt="problem" class="img-responsive">
+      </div>
+    </div>
+
+    <div class="panel panel-warning">
+        {%if problem.hint1%}
+            {%if H1|at:problem.id %}
+
+              <div class="panel-heading">
+                <h3 class="panel-title">提示1内容：</h3>
+            </div>
+
+              <div class="panel-body">
+                <img src="http://littlecircle.top/dxyy/problemset/{{hint1}}.png" alt="hint1" class="img-responsive">
+            </div>
+            {%else%}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModalhint1">使用提示1</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModalhint1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">确认使用提示1吗?</h4>
+                      </div>
+                      <div class="modal-body">
+                        这将在总分中扣除相应的分数
+                      </div>
+                      <div class="modal-footer">
+                          <!--   Change here   -->
+                        <form action="{% url 'usehint' %}?problem={{problem.id}}&hint_num=1" class="form" method="post">{% csrf_token %}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">还是算了</button>
+                            <button type="submit" class="btn btn-danger">确认使用</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {%endif%}
+        {%else%}
+            <button type="button" class="btn btn-warning disabled">不存在提示一</button>
+        {%endif%}
+    </div>
+
+    <div class="panel panel-danger">
+        {%if problem.hint2%}
+            {%if H2|at:problem.id %}
+
+              <div class="panel-heading">
+                <h3 class="panel-title">提示2内容：</h3>
+            </div>
+              <div class="panel-body">
+                <img src="http://littlecircle.top/dxyy/problemset/{{hint2}}.png" alt="hint2" class="img-responsive">
+            </div>
+            {%else%}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalhint2">使用提示2</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModalhint2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">确认使用提示2吗?</h4>
+                      </div>
+                      <div class="modal-body">
+                        这将在总分中扣除相应的分数
+                      </div>
+                      <div class="modal-footer">
+                          <!--   Change here   -->
+                        <form action="{% url 'usehint' %}?problem={{problem.id}}&hint_num=2" class="form" method="post">{% csrf_token %}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">还是算了</button>
+                            <button type="submit" class="btn btn-danger">确认使用</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {%endif%}
+        {%else%}
+            <button type="button" class="btn btn-danger disabled">不存在提示二</button>
+        {%endif%}
+    </div>
+
+  </body>
+</html>
